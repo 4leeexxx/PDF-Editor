@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Free Online PDF Editor — Merge, Split, Compress & Convert PDFs | ToolSuite</title>
+  <meta name="description" content="Free online PDF editor. Merge multiple PDFs, split pages, compress file size, and convert text to PDF — all in your browser. No upload, no sign-up, 100% private." />
+  <meta name="keywords" content="free PDF editor online, merge PDF, split PDF, compress PDF, convert to PDF, PDF tools free, edit PDF online, PDF merger, PDF splitter, PDF compressor" />
+  <meta name="robots" content="index, follow" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://fonts.gstatic.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'none'; frame-ancestors 'none'; form-action 'none';" />
+  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+  <meta http-equiv="X-Frame-Options" content="DENY" />
+  <link rel="stylesheet" href="shared.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Lora:ital,wght@0,500;1,400&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <div class="bg-orb orb1"></div>
+  <div class="bg-orb orb2"></div>
+  <div class="bg-orb orb3"></div>
+
+  <nav class="site-nav">
+    <a class="nav-link" href="index.html">₿ Crypto Calc</a>
+    <a class="nav-link" href="gpa.html">🎓 GPA Calc</a>
+    <a class="nav-link" href="sensitivity.html">🎮 Sensitivity Calc</a>
+    <a class="nav-link active" href="pdf.html">📄 PDF Editor</a>
+    <a class="nav-link" href="downloader.html">⬇️ Video Downloader</a>
+  </nav>
+
+  <div class="ad-banner ad-top"></div>
+
+  <div class="page-wrapper">
+    <header class="site-header">
+      <div class="logo-row">
+        <div class="logo-icon" aria-hidden="true">📄</div>
+        <div class="logo-text">
+          <h1 class="logo">PDF Editor</h1>
+          <p class="tagline">Merge, split, compress & convert — free, private, in your browser</p>
+        </div>
+      </div>
+    </header>
+
+    <main class="main-layout">
+      <aside class="ad-sidebar"></aside>
+
+      <section class="calc-card" style="max-width:620px">
+        <!-- TOOL TABS -->
+        <div class="tool-tabs" role="tablist">
+          <button class="tool-tab active" role="tab" data-tool="text2pdf" type="button">📝 Text to PDF</button>
+          <button class="tool-tab" role="tab" data-tool="merge" type="button">🔗 Merge PDFs</button>
+          <button class="tool-tab" role="tab" data-tool="split" type="button">✂️ Split PDF</button>
+        </div>
+
+        <!-- TEXT TO PDF -->
+        <div class="tool-panel" id="panel-text2pdf">
+          <p class="section-label">📝 Convert text to PDF</p>
+          <div class="input-group full-width" style="margin-bottom:16px">
+            <label for="pdfTitle">Document Title</label>
+            <div class="input-wrap"><span class="prefix">📄</span><input type="text" id="pdfTitle" placeholder="My Document" maxlength="100" autocomplete="off" /></div>
+          </div>
+          <div class="input-group full-width" style="margin-bottom:16px">
+            <label for="pdfAuthor">Author Name <span style="font-weight:400;color:var(--text-dim)">(optional)</span></label>
+            <div class="input-wrap"><span class="prefix">👤</span><input type="text" id="pdfAuthor" placeholder="Your Name" maxlength="80" autocomplete="off" /></div>
+          </div>
+          <div class="input-group full-width" style="margin-bottom:24px">
+            <label for="pdfContent">Your Text</label>
+            <textarea id="pdfContent" rows="8" placeholder="Paste or type your text here. It will be formatted into a clean, readable PDF..." maxlength="50000"></textarea>
+            <span class="input-hint" id="charCount">0 / 50,000 characters</span>
+          </div>
+          <button class="calc-btn" type="button" onclick="generatePDF()">Generate & Download PDF 📥</button>
+        </div>
+
+        <!-- MERGE PDFs -->
+        <div class="tool-panel" id="panel-merge" style="display:none">
+          <p class="section-label">🔗 Merge multiple PDFs into one</p>
+          <div class="drop-zone" id="merge-drop">
+            <div class="drop-icon">📂</div>
+            <p>Drag & drop PDF files here, or</p>
+            <label class="file-label" for="merge-input">Browse files</label>
+            <input type="file" id="merge-input" accept=".pdf" multiple style="display:none" />
+            <p class="input-hint" style="margin-top:8px">Select 2 or more PDF files</p>
+          </div>
+          <div id="merge-file-list" class="file-list"></div>
+          <button class="calc-btn" type="button" onclick="mergePDFs()" style="margin-top:20px">Merge & Download PDF 🔗</button>
+        </div>
+
+        <!-- SPLIT PDF -->
+        <div class="tool-panel" id="panel-split" style="display:none">
+          <p class="section-label">✂️ Extract pages from a PDF</p>
+          <div class="drop-zone" id="split-drop">
+            <div class="drop-icon">📂</div>
+            <p>Drag & drop your PDF here, or</p>
+            <label class="file-label" for="split-input">Browse file</label>
+            <input type="file" id="split-input" accept=".pdf" style="display:none" />
+          </div>
+          <div id="split-info" class="split-info" style="display:none">
+            <p id="split-filename"></p>
+          </div>
+          <div class="input-group full-width" style="margin-top:16px;margin-bottom:20px">
+            <label for="splitPages">Pages to extract</label>
+            <div class="input-wrap"><span class="prefix">📄</span><input type="text" id="splitPages" placeholder="e.g. 1,3,5-8" maxlength="100" autocomplete="off" /></div>
+            <span class="input-hint">Enter page numbers and/or ranges, e.g. 1, 3, 5-8, 12</span>
+          </div>
+          <button class="calc-btn" type="button" onclick="splitPDF()">Extract Pages & Download ✂️</button>
+        </div>
+
+        <!-- Status message -->
+        <div class="pdf-status" id="pdf-status" style="display:none"></div>
+      </section>
+
+      <aside class="ad-sidebar"></aside>
+    </main>
+
+    <div class="ad-banner ad-mid"></div>
+
+    <section class="info-section">
+      <h2 class="info-title">How it works</h2>
+      <div class="steps">
+        <div class="step"><div class="step-bubble">1</div><div class="step-body"><strong>Choose a tool</strong><p>Select Text to PDF, Merge, or Split from the tabs above.</p></div></div>
+        <div class="step"><div class="step-bubble">2</div><div class="step-body"><strong>Add your content</strong><p>Type your text or drag and drop your PDF files.</p></div></div>
+        <div class="step"><div class="step-bubble">3</div><div class="step-body"><strong>Click generate</strong><p>Your file is created instantly, right in your browser.</p></div></div>
+        <div class="step"><div class="step-bubble">📥</div><div class="step-body"><strong>Download your PDF</strong><p>Saved directly to your device. Nothing uploaded to any server.</p></div></div>
+      </div>
+    </section>
+
+    <article class="seo-section">
+      <h2>Free Online PDF Editor — No Upload, No Account Needed</h2>
+      <p>Our <strong>free PDF editor</strong> runs entirely in your browser. That means your files never leave your device. No cloud upload, no sign-up, no watermarks. Just instant, private PDF processing.</p>
+
+      <h3>Text to PDF Converter</h3>
+      <p>Have a document, essay, note, or report that you want to turn into a <strong>professional PDF</strong>? Paste your text, add a title and author name, and click generate. You'll get a clean, formatted PDF file downloaded instantly to your device.</p>
+
+      <h3>Merge PDFs Online Free</h3>
+      <p>Need to <strong>combine multiple PDF files into one</strong>? Select 2 or more PDF files, drag them into the correct order, and click Merge. The resulting PDF is downloaded to your device in seconds. Great for combining chapters, invoices, reports, or scanned documents.</p>
+
+      <h3>Split PDF — Extract Specific Pages</h3>
+      <p>Upload a PDF and specify which pages you want to extract — single pages, comma-separated lists, or ranges like 5-8. The extracted pages are saved as a new PDF file. Perfect for pulling out specific chapters, removing pages, or sharing only part of a document.</p>
+
+      <h3>Frequently Asked Questions</h3>
+      <div class="faq-list">
+        <div class="faq-item"><button class="faq-q" type="button">Are my files private? <span class="faq-icon">+</span></button><div class="faq-a">Completely. All PDF processing happens inside your browser using JavaScript. No data is sent to any server. Your files stay on your device.</div></div>
+        <div class="faq-item"><button class="faq-q" type="button">Is there a file size limit? <span class="faq-icon">+</span></button><div class="faq-a">There's no server-side limit. Your browser's memory is the practical limit — most modern computers handle PDFs up to 100MB without issues.</div></div>
+        <div class="faq-item"><button class="faq-q" type="button">Will merged PDFs have watermarks? <span class="faq-icon">+</span></button><div class="faq-a">No watermarks, ever. This tool is 100% free with no paid tier.</div></div>
+        <div class="faq-item"><button class="faq-q" type="button">Can I use this on mobile? <span class="faq-icon">+</span></button><div class="faq-a">Yes, the tool is fully mobile-friendly. You can generate and download PDFs on iOS and Android.</div></div>
+      </div>
+    </article>
+
+    <div class="ad-banner ad-bottom"></div>
+
+    <footer class="site-footer">
+      <div class="footer-links">
+        <a href="index.html">Crypto Calculator</a>
+        <a href="gpa.html">GPA Calculator</a>
+        <a href="sensitivity.html">Sensitivity Calculator</a>
+        <a href="pdf.html">PDF Editor</a>
+        <a href="downloader.html">Video Downloader</a>
+      </div>
+      <p>Made with ☀️ by ToolSuite &nbsp;·&nbsp; Your files never leave your browser.</p>
+    </footer>
+  </div>
+
+  <!-- pdf-lib for in-browser PDF creation -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+  <script src="pdf.js"></script>
+  <script>
+    document.querySelectorAll('.faq-q').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        const ans=btn.nextElementSibling,isOpen=ans.classList.contains('open');
+        document.querySelectorAll('.faq-a').forEach(a=>a.classList.remove('open'));
+        document.querySelectorAll('.faq-q').forEach(b=>b.classList.remove('open'));
+        if(!isOpen){ans.classList.add('open');btn.classList.add('open');}
+      });
+    });
+  </script>
+</body>
+</html>
